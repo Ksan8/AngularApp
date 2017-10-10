@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="eventsApp">
+   <head>
+      <meta charset="utf-8">
+      <title>Event Registration</title>
+      <link rel="stylesheet" href="Content/bootstrap.min.css">
+      <link rel="stylesheet" href="Content/app.css">
+   </head>
+   <body>
+      <div class="container">
+         <div class="navbar">
+            <div class="navbar-inner">
+               <ul class="nav">
+
+               </ul>
+            </div>
+         </div>
+         <div ng-controller="EventController" style="padding-left:20px; padding-right:20px">
+            <!-- ng-src delays the request for the image until Angular has replaced the text {{event.imageUrl}} with the actual image -->
+            <img ng-src="{{event.imageUrl}}" alt="{{event.name}}">
+            <div class="row">
+               <div class="span11">
+                  <h2 ng-bind-template="{{event.name}} {{event.date}}"></h2>
+               </div>
+            </div>
+            <div class="row">
+               <div class="span3">
+                  <div><strong>Date:</strong> {{event.date}}</div>
+                  <div><strong>Time:</strong> {{event.time}}</div>
+               </div>
+               <div class="span4">
+                  <address>
+                     <strong>Address:</strong><br/>
+                     {{event.location.address}}<br/>
+                     {{event.location.city}}, {{event.location.state}}
+                  </address>
+               </div>
+            </div>
+
+            <hr />
+
+            <h3>Sessions</h3>
+            <ul class="thumbnails">
+               <li ng-repeat="session in event.sessions">
+                  <!-- session was defined in ng-repeat, and thus can be used below in subsequent elements (even passed into a click callback function); thus, don't have to worry about IDs! -->
+                  <div class="row session">
+                     <div class="span0 well votingWidget">
+                        <div class="votingButton" ng-click="upVoteSession(session)">
+                           <i class="icon-chevron-up icon-white"></i>
+                        </div>
+                        <div class="badge badge-invers">
+                           <div>{{session.upVoteCount}}</div>
+                        </div>
+                        <div class="votingButton" ng-click="downVoteSession(session)">
+                           <i class="icon-chevron-down"></i>
+                        </div>
+                     </div>
+                     <div class="well span9">
+                        <h4 class="well-title">{{session.name}}</h4>
+                        <h6 style="margin-top:-10px">{{session.creatorName}}</h6>
+                        <span>Duration: {{session.duration}}</span><br>
+                        <span>Level: {{session.level}}</span><br>
+                        <p>{{session.abstract}}</p>
+                     </div>
+                  </div>
+               </li>
+            </ul>
+         </div>
+      </div>
+
+      <script src="scripts/jquery-1.9.1.min.js"></script>
+      <script src="/scripts/underscore-1.4.4.min.js"></script>
+      <script src="/scripts/bootstrap.min.js"></script>
+      <script src="/scripts/angular.js"></script>
+      <script src="scripts/angular-sanitize.js"></script>
+      <script src="/scripts/app.js"></script>
+      <script src="/scripts/controllers/EventController.js"></script>
+   </body>
+</html>
